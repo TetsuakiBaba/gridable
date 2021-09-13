@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Gridable</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="./assets/css/style.css" rel="stylesheet">
+
+
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <main class="container-fluid">
+        <h1>Gridable</h1>
+        <p class="lead">Makes a picture grid easier </p>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Number of images</span>
+            <input id="number_of_thumbs" min=1 max=100 type="number" class="form-control" value=1
+                aria-describedby="basic-addon1">
+            <span class="input-group-text" id="basic-addon1">Number of columns</span>
+            <input id="number_of_columns" onchange="setColumns(value);" min=1 max=12 type="number" class="form-control"
+                value=4 aria-describedby="basic-addon1">
+
+            <button class="btn btn-outline-secondary" onclick="saveImage();">save</button>
+        </div>
+        <hr class="my-5">
+
+        <div class="capture" id="capture">
+            <!-- <p>
+                これは私の推測ですが、JS という言語は素のままで書かれることが少ない言語です。
+                React や Vue などで書くこともあれば、TS などの Alt JS を使うことも今では当たり前になってきています。
+                このため、むしろ素の JS で書くことが少ないことから対比のために Vanilla という呼び方が定着したのではないでしょうか。
+            </p>
+ -->
+            <!-- <button onclick="manualLayout();">layout</button> -->
+            <div id="row_thumbs" class="grid">
+                <div class="grid-sizer"></div>
+
+            </div>
+        </div>
+
+
+
+        <hr class="my-5">
+        <footer class="text-center">
+            2021 &copy; Tetsuaki Baba all rights reserved.
+        </footer>
+    </main>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
+    <script src="./assets/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/canvas2image.js"></script>
+    <script src="./assets/js/sample_images.js"></script>
+    <script src="./assets/js/sketch.js"></script>
+
+
+
+</body>
+
+
+</html>
