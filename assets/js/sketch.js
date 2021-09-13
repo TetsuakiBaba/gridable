@@ -36,7 +36,7 @@ msnry = new Masonry(elem, {
     itemSelector: '.grid-item',
     percentPosition: true,
     gutter: 0,
-    originLeft: false,
+    originLeft: true,
 });
 
 function manualLayout() {
