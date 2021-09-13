@@ -1,5 +1,6 @@
 # GRIDABLE
 Gridable makes a picture grid easier. First, set the number you want fro images, then drag and drop your favorite picture on a thumbnail. You can save the image by clicking the save button.
+  * try at github page: https://tetsuakibaba.github.io/gridable/
 
 ![](./teaser.gif)
 
@@ -16,4 +17,4 @@ All sample images are from Pexels.com. I'd like to thank users who give us beaut
  * [pexels-roberto-nickson-2559941.jpg](https://www.pexels.com/ja-jp/photo/2559941/)
  * [pexels-rocketmann-team-9486615.jpg](https://www.pexels.com/ja-jp/photo/9486615/)
  * [pexels-zaksheuskaya-1561020.jpg](https://www.pexels.com/ja-jp/photo/1561020/)
-  * Source Code: MIT
+  * Source Code: [MIT](https://opensource.org/licenses/MIT)
