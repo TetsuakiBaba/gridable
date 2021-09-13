@@ -34,7 +34,9 @@ msnry = new Masonry(elem, {
     // options
     columnWidth: '.grid-sizer',
     itemSelector: '.grid-item',
-    percentPosition: true
+    percentPosition: true,
+    gutter: 0,
+    originLeft: false,
 });
 
 function manualLayout() {
@@ -89,7 +91,7 @@ function createThumbs(my_event, filename) {
     var card_element = document.createElement('div');
     card_element.classList.add('card');
     var image_element = document.createElement('img');
-    console.log(Math.random(sample_images.length));
+    image_element.classList.add('card-img-top');
     card_element.append(image_element);
     thumbs[i].append(card_element);
     thumbs[i].classList.add('grid-item');
