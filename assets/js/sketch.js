@@ -51,15 +51,9 @@ document.getElementById('row_thumbs').addEventListener('drop', function (event) 
 
     console.log("dropped:", event);
     createThumbs(event, '');
-    // var filenames = [];
-    // for (const f of event.target.result) {
-    //     filenames.push(f.name);
-    // }
-
-
-
-
 });
+
+
 document.getElementById('row_thumbs').addEventListener('dragover', function (event) {
     event.preventDefault();
     this.style.backgroundColor = '#DDDDDD';
@@ -82,29 +76,39 @@ function createThumbs(my_event, filename) {
     var number_of_columns = document.getElementById("number_of_columns").value;
     const num = parseInt(12 / number_of_columns);
     console.log('my_event:', my_event);
-    thumbs.push(document.createElement('div'));
+    thumbs.push(
+        {
+            id: Math.random().toString(32).substring(2),
+            element: document.createElement('div')
+        }
+    );
     var i = thumbs.length - 1;
-    thumbs[i].classList.add('col-sm-' + num);
-    thumbs[i].classList.add('col-lg-' + num);
-    thumbs[i].classList.add('mb-0');
-    thumbs[i].classList.add('thumb');
+    thumbs[i].element.classList.add('col-sm-' + num);
+    thumbs[i].element.classList.add('col-lg-' + num);
+    thumbs[i].element.classList.add('mb-0');
+    thumbs[i].element.classList.add('thumb');
     var card_element = document.createElement('div');
     card_element.classList.add('card');
     var image_element = document.createElement('img');
     image_element.classList.add('card-img-top');
+    image_element.classList.add('overlay');
     card_element.append(image_element);
-    thumbs[i].append(card_element);
-    thumbs[i].classList.add('grid-item');
-    document.getElementById("row_thumbs").append(thumbs[i]);
-    msnry.appended(thumbs[i]);
+    thumbs[i].element.append(card_element);
+    thumbs[i].element.classList.add('grid-item');
+    thumbs[i].element.id = thumbs[i].id;
+    image_element.id = thumbs[i].id;
+    document.getElementById("row_thumbs").append(thumbs[i].element);
+    msnry.appended(thumbs[i].element);
 
     image_element.addEventListener('drop', function (event) {
         event.stopPropagation();
         event.preventDefault();
+        console.log(event);
         this.style.backgroundColor = '';
         this.style.border = '';
         document.getElementById('row_thumbs').style.backgroundColor = '';
         document.getElementById('row_thumbs').style.border = '';
+
         var reader;
         new Promise((resolve, reject) => {
             reader = new FileReader();
@@ -128,6 +132,18 @@ function createThumbs(my_event, filename) {
         event.preventDefault();
         this.style.backgroundColor = '';
         this.style.border = '';
+    });
+    image_element.addEventListener('mousedown', function (event) {
+        event.preventDefault();
+        this.classList.toggle('selected');
+        // event.target.id と 一致するサムネイルを削除する
+        const element_remove = thumbs.filter(x => x.id == event.target.id)
+        msnry.remove(element_remove[0].element);
+        msnry.layout();
+
+        thumbs = thumbs.filter(x => x.id != event.target.id)
+        console.log(thumbs);
+        document.getElementById('number_of_thumbs').value = thumbs.length;
     });
 
 
@@ -159,20 +175,111 @@ function createThumbs(my_event, filename) {
     }
     msnry.layout();
     document.getElementById('number_of_thumbs').value = thumbs.length;
+    console.log(thumbs[i]);
+
+    // var number_of_columns = document.getElementById("number_of_columns").value;
+    // const num = parseInt(12 / number_of_columns);
+    // console.log('my_event:', my_event);
+    // thumbs.push(document.createElement('div'));
+    // var i = thumbs.length - 1;
+    // thumbs[i].classList.add('col-sm-' + num);
+    // thumbs[i].classList.add('col-lg-' + num);
+    // thumbs[i].classList.add('mb-0');
+    // thumbs[i].classList.add('thumb');
+    // var card_element = document.createElement('div');
+    // card_element.classList.add('card');
+    // var image_element = document.createElement('img');
+    // image_element.classList.add('card-img-top');
+    // card_element.append(image_element);
+    // thumbs[i].append(card_element);
+    // thumbs[i].classList.add('grid-item');
+    // document.getElementById("row_thumbs").append(thumbs[i]);
+    // msnry.appended(thumbs[i]);
+
+    // image_element.addEventListener('drop', function (event) {
+    //     event.stopPropagation();
+    //     event.preventDefault();
+    //     this.style.backgroundColor = '';
+    //     this.style.border = '';
+    //     document.getElementById('row_thumbs').style.backgroundColor = '';
+    //     document.getElementById('row_thumbs').style.border = '';
+    //     var reader;
+    //     new Promise((resolve, reject) => {
+    //         reader = new FileReader();
+    //         reader.onload = function (event) {
+    //             image_element.src = event.target.result;
+    //             resolve(event.target.result);
+    //         }
+    //         reader.readAsDataURL(event.dataTransfer.files[0]);
+    //     }).then((result) => {
+    //         console.log("loaded");
+    //         msnry.layout();
+    //     });
+
+    // });
+    // image_element.addEventListener('dragover', function (event) {
+    //     event.preventDefault();
+    //     this.style.backgroundColor = '#DDDDDD';
+    //     this.style.border = '5px dashed gray';
+    // });
+    // image_element.addEventListener('dragleave', function (event) {
+    //     event.preventDefault();
+    //     this.style.backgroundColor = '';
+    //     this.style.border = '';
+    // });
+    // thumbs[i].addEventListener('click', function (event) {
+    //     event.preventDefault();
+    //     this.classList.toggle('selected');
+    // });
+
+
+    // if (my_event != '') {
+    //     new Promise((resolve, reject) => {
+    //         reader = new FileReader();
+    //         reader.onload = function (my_event) {
+    //             image_element.src = my_event.target.result;
+    //             resolve(my_event.target.result);
+    //         }
+    //         reader.readAsDataURL(my_event.dataTransfer.files[0]);
+    //     }).then((result) => {
+    //         console.log("loaded");
+    //         msnry.layout();
+    //     });
+    // }
+    // else {
+    //     new Promise((resolve, reject) => {
+    //         //const img = new Image();
+    //         image_element.onload = () => resolve(image_element);
+    //         image_element.onerror = (e) => reject(e);
+    //         image_element.src = filename
+
+    //     }).then((result) => {
+    //         msnry.layout();
+    //     });
+
+
+    // }
+    // msnry.layout();
+    // document.getElementById('number_of_thumbs').value = thumbs.length;
 }
 
 document.getElementById("number_of_thumbs").addEventListener('change', function (event) {
 
     if (event.target.value > thumbs.length) {
-        var filename = [
-            choose_at_random(sample_images)
-        ];
-        createThumbs('', filename);
+        let loop = event.target.value - thumbs.length;
+        for (let i = 0; i < loop; i++) {
+            var filename = [
+                choose_at_random(sample_images)
+            ];
+            createThumbs('', filename);
+        }
     }
     else if (event.target.value < thumbs.length) {
-        msnry.remove(thumbs[thumbs.length - 1]);
-        thumbs[thumbs.length - 1].remove();
-        thumbs.pop();
+        let loop = thumbs.length - event.target.value;
+        for (let i = 0; i < loop; i++) {
+            msnry.remove(thumbs[thumbs.length - 1].element);
+            thumbs.pop();
+        }
     }
     msnry.layout();
 });

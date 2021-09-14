@@ -23,3 +23,22 @@
 .capture{
     background-color:white;
 }
+
+.selected{
+    border: 5px dashed gray;
+}
+
+.overlay{
+    -webkit-filter: grayscale(0) blur(0);
+    filter: grayscale(0) blur(0);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    cursor:pointer;
+}
+.overlay:hover{
+    -webkit-filter: grayscale(100%) blur(3px);
+  filter: grayscale(100%) blur(3px);
+}
+
+
+
