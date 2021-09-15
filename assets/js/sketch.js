@@ -75,7 +75,6 @@ function choose_at_random(arrayData) {
 function createThumbs(my_event, filename) {
     var number_of_columns = document.getElementById("number_of_columns").value;
     const num = parseInt(12 / number_of_columns);
-    console.log('my_event:', my_event);
     thumbs.push(
         {
             id: Math.random().toString(32).substring(2),
@@ -83,27 +82,45 @@ function createThumbs(my_event, filename) {
         }
     );
     var i = thumbs.length - 1;
+
+
     thumbs[i].element.classList.add('col-sm-' + num);
     thumbs[i].element.classList.add('col-lg-' + num);
     thumbs[i].element.classList.add('mb-0');
     thumbs[i].element.classList.add('thumb');
     var card_element = document.createElement('div');
     card_element.classList.add('card');
+    var wrap_element = document.createElement('div');
+
+    var aspect = document.getElementById('select_aspect').value;
+    if (aspect === 'original') {
+        wrap_element.classList.remove('image-wrap');
+    }
+    else {
+        wrap_element.classList.add('image-wrap');
+        wrap_element.style.paddingTop = parseInt(100 * (parseFloat(aspect))).toString() + '%';
+    }
+
+
     var image_element = document.createElement('img');
     image_element.classList.add('card-img-top');
     image_element.classList.add('overlay');
-    card_element.append(image_element);
+
+    image_element.classList.add('rounded-0');
+    wrap_element.append(image_element);
+    card_element.append(wrap_element);
     thumbs[i].element.append(card_element);
     thumbs[i].element.classList.add('grid-item');
     thumbs[i].element.id = thumbs[i].id;
     image_element.id = thumbs[i].id;
+
+
     document.getElementById("row_thumbs").append(thumbs[i].element);
     msnry.appended(thumbs[i].element);
 
     image_element.addEventListener('drop', function (event) {
         event.stopPropagation();
         event.preventDefault();
-        console.log(event);
         this.style.backgroundColor = '';
         this.style.border = '';
         document.getElementById('row_thumbs').style.backgroundColor = '';
@@ -142,7 +159,6 @@ function createThumbs(my_event, filename) {
         msnry.layout();
 
         thumbs = thumbs.filter(x => x.id != event.target.id)
-        console.log(thumbs);
         document.getElementById('number_of_thumbs').value = thumbs.length;
     });
 
@@ -156,7 +172,6 @@ function createThumbs(my_event, filename) {
             }
             reader.readAsDataURL(my_event.dataTransfer.files[0]);
         }).then((result) => {
-            console.log("loaded");
             msnry.layout();
         });
     }
@@ -175,92 +190,6 @@ function createThumbs(my_event, filename) {
     }
     msnry.layout();
     document.getElementById('number_of_thumbs').value = thumbs.length;
-    console.log(thumbs[i]);
-
-    // var number_of_columns = document.getElementById("number_of_columns").value;
-    // const num = parseInt(12 / number_of_columns);
-    // console.log('my_event:', my_event);
-    // thumbs.push(document.createElement('div'));
-    // var i = thumbs.length - 1;
-    // thumbs[i].classList.add('col-sm-' + num);
-    // thumbs[i].classList.add('col-lg-' + num);
-    // thumbs[i].classList.add('mb-0');
-    // thumbs[i].classList.add('thumb');
-    // var card_element = document.createElement('div');
-    // card_element.classList.add('card');
-    // var image_element = document.createElement('img');
-    // image_element.classList.add('card-img-top');
-    // card_element.append(image_element);
-    // thumbs[i].append(card_element);
-    // thumbs[i].classList.add('grid-item');
-    // document.getElementById("row_thumbs").append(thumbs[i]);
-    // msnry.appended(thumbs[i]);
-
-    // image_element.addEventListener('drop', function (event) {
-    //     event.stopPropagation();
-    //     event.preventDefault();
-    //     this.style.backgroundColor = '';
-    //     this.style.border = '';
-    //     document.getElementById('row_thumbs').style.backgroundColor = '';
-    //     document.getElementById('row_thumbs').style.border = '';
-    //     var reader;
-    //     new Promise((resolve, reject) => {
-    //         reader = new FileReader();
-    //         reader.onload = function (event) {
-    //             image_element.src = event.target.result;
-    //             resolve(event.target.result);
-    //         }
-    //         reader.readAsDataURL(event.dataTransfer.files[0]);
-    //     }).then((result) => {
-    //         console.log("loaded");
-    //         msnry.layout();
-    //     });
-
-    // });
-    // image_element.addEventListener('dragover', function (event) {
-    //     event.preventDefault();
-    //     this.style.backgroundColor = '#DDDDDD';
-    //     this.style.border = '5px dashed gray';
-    // });
-    // image_element.addEventListener('dragleave', function (event) {
-    //     event.preventDefault();
-    //     this.style.backgroundColor = '';
-    //     this.style.border = '';
-    // });
-    // thumbs[i].addEventListener('click', function (event) {
-    //     event.preventDefault();
-    //     this.classList.toggle('selected');
-    // });
-
-
-    // if (my_event != '') {
-    //     new Promise((resolve, reject) => {
-    //         reader = new FileReader();
-    //         reader.onload = function (my_event) {
-    //             image_element.src = my_event.target.result;
-    //             resolve(my_event.target.result);
-    //         }
-    //         reader.readAsDataURL(my_event.dataTransfer.files[0]);
-    //     }).then((result) => {
-    //         console.log("loaded");
-    //         msnry.layout();
-    //     });
-    // }
-    // else {
-    //     new Promise((resolve, reject) => {
-    //         //const img = new Image();
-    //         image_element.onload = () => resolve(image_element);
-    //         image_element.onerror = (e) => reject(e);
-    //         image_element.src = filename
-
-    //     }).then((result) => {
-    //         msnry.layout();
-    //     });
-
-
-    // }
-    // msnry.layout();
-    // document.getElementById('number_of_thumbs').value = thumbs.length;
 }
 
 document.getElementById("number_of_thumbs").addEventListener('change', function (event) {
@@ -281,6 +210,7 @@ document.getElementById("number_of_thumbs").addEventListener('change', function 
             thumbs.pop();
         }
     }
+
     msnry.layout();
 });
 
@@ -317,4 +247,12 @@ function setColumns(value) {
     msnry.layout();
 
     value_previous = value;
+}
+
+function setAspect(value) {
+    // var elements = document.querySelectorAll('img.card-img-top');
+    // console.log(elements);
+    // for (element of elements) {
+
+    // }
 }

@@ -67,6 +67,16 @@
             <span class="input-group-text" id="basic-addon1">Number of columns</span>
             <input id="number_of_columns" onchange="setColumns(value);" min=1 max=12 type="number" class="form-control"
                 value=4 aria-describedby="basic-addon1">
+            <span class="input-group-text" id="basic-addon1">Aspect</span>
+            <select id="select_aspect" onchange="setAspect(value);" class="form-select"
+                aria-label="Default select example">
+                <option selected value='original'>Original</option>
+                <option value="1.0">1:1</option>
+                <option value="0.75">4:3</option>
+                <option value="0.5625">16:9</option>
+                <option value="1.3333">3:4</option>
+                <option value="1.7777">9:16</option>
+            </select>
             <button class="btn btn-outline-secondary" onclick="saveImage();">save</button>
         </div>
         <hr class="my-5">
