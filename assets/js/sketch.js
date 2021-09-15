@@ -16,13 +16,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function saveImage() {
     //ボタンを押下した際にダウンロードする画像を作る
-    html2canvas(document.querySelector("#capture"), {
-        onrendered: function (canvas) {
-            //aタグのhrefにキャプチャ画像のURLを設定
-            var imgData = canvas.toDataURL();
-            Canvas2Image.saveAsPNG(canvas);
-        }
-    });
+    var aspect = document.getElementById("select_aspect").value;
+    var elements = document.querySelectorAll('.image-wrap');
+    console.log(elements);
+    if (elements.length == 0) {
+        html2canvas(document.querySelector("#capture"), {
+            onrendered: function (canvas) {
+                //aタグのhrefにキャプチャ画像のURLを設定
+                var imgData = canvas.toDataURL();
+                Canvas2Image.saveAsPNG(canvas);
+            }
+        });
+    }
+    else {
+        alert('Unfortunately, the image download function is only available when all image aspect ratios are original. Please do a screen capture manually.');
+    }
 
 
 }
